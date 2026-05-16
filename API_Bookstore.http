@@ -1,0 +1,6 @@
+@API_Bookstore_HostAddress = http://localhost:5248
+
+GET {{API_Bookstore_HostAddress}}/swagger/
+Accept: application/json
+
+###

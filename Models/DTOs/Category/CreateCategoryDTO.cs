@@ -4,8 +4,8 @@ namespace API_Bookstore.Models.DTOs.Category
 {
     public class CreateCategoryDTO
     {
-        [Required(ErrorMessage = "Name is required.")]
-        [MaxLength(255, ErrorMessage = "Name cannot exceed 255 characters.")]
+        [Required(ErrorMessage = "Tên là bắt buộc.")]
+        [MaxLength(255, ErrorMessage = "Tên không vượt quá 255 kí tự.")]
         public string Name { get; set; } = string.Empty;
         public string? Description { get; set; }
     }

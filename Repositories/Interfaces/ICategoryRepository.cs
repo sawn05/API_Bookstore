@@ -8,7 +8,7 @@ namespace API_Bookstore.Repositories.Interfaces
         Task<Category?> GetCategoryByIdAsync(int id);
         Task<bool> IsCategoryNameExistsAsync(string name);
         Task<Category> CreateCategoryAsync(Category category);
-        Task<Category?> UpdateCategoryAsync(int id, Category category);
+        Task<Category?> UpdateCategoryAsync(Category category);
         Task DeleteCategoryAsync(Category category);
     }
 }

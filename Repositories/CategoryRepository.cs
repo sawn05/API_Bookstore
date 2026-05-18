@@ -42,7 +42,7 @@ namespace API_Bookstore.Repositories
             return await _context.Categories.AnyAsync(c => c.Name == name);
         }
 
-        public async Task<Category?> UpdateCategoryAsync(int id, Category category)
+        public async Task<Category?> UpdateCategoryAsync(Category category)
         {
             _context.Categories.Update(category);
             await _context.SaveChangesAsync();

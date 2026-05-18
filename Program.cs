@@ -19,10 +19,12 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 // Register repositories for dependency injection
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+builder.Services.AddScoped<IBookRepository, BookRepository>();
 
 
 // Register services for dependency injection
 builder.Services.AddScoped<ICategoryService, CategoryService>();
+builder.Services.AddScoped<IBookService, BookService>();
 
 
 

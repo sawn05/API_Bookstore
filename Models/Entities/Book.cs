@@ -13,7 +13,7 @@ namespace API_Bookstore.Models.Entities
 
         public decimal Price { get; set; }
         public int Stock { get; set; }  
-        public DateTime CreateAt { get; set; } = DateTime.UtcNow;
+        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
         // Navigation property (N-1 to Categories)
         public int CategoryId { get; set; }

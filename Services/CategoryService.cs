@@ -89,7 +89,7 @@ namespace API_Bookstore.Services
             category.Name = categoryUpdateDTO.Name;
             category.Description = categoryUpdateDTO.Description;
 
-            await _categoryRepository.UpdateCategoryAsync(id, category);
+            await _categoryRepository.UpdateCategoryAsync(category);
 
             return new CategoryDTO
             {

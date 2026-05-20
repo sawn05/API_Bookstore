@@ -1,6 +1,7 @@
 ﻿using API_Bookstore.Models.DTOs.Book;
 using API_Bookstore.Services;
 using API_Bookstore.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -63,6 +64,7 @@ namespace API_Bookstore.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> CreateAsync([FromBody] CreateBookDTO dto)
         {
             if (!ModelState.IsValid)
@@ -84,6 +86,7 @@ namespace API_Bookstore.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteAsync(Guid id)
         {
             try
@@ -107,6 +110,7 @@ namespace API_Bookstore.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> UpdateAsync(Guid id, [FromBody] UpdateBookDTO dto)
         {
             if (!ModelState.IsValid)

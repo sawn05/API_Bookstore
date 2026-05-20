@@ -91,7 +91,7 @@ namespace API_Bookstore.Services
             {
                 Items = items.Select(b => ToDTO(b)).ToList(),
                 TotalItems = totalCount,
-                TotalPages = (int)Math.Ceiling(totalCount / (double)pageSize),
+                // TotalPages = (int)Math.Ceiling(totalCount / (double)pageSize),
                 PageSize = pageSize,
                 CurrentPage = page
             };

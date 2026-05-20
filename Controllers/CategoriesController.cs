@@ -2,6 +2,7 @@
 using API_Bookstore.Repositories;
 using API_Bookstore.Repositories.Interfaces;
 using API_Bookstore.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using static System.Runtime.InteropServices.JavaScript.JSType;
@@ -50,6 +51,7 @@ namespace API_Bookstore.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Create([FromBody] CreateCategoryDTO dto)
         {
             if (!ModelState.IsValid)
@@ -72,6 +74,7 @@ namespace API_Bookstore.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Update(int id, [FromBody] UpdateCategoryDTO dto)
         {
             if (id <= 0)
@@ -103,6 +106,7 @@ namespace API_Bookstore.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int id)
         {
             if (id <= 0)

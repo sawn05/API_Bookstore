@@ -1,11 +1,13 @@
 ﻿using API_Bookstore.Models.DTOs.User;
 using API_Bookstore.Services;
 using API_Bookstore.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API_Bookstore.Controllers
 {
+    [Authorize(Roles = "Admin")]
     [Route("api/[controller]")]
     [ApiController]
     public class UsersController : ControllerBase

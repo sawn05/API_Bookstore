@@ -7,11 +7,13 @@ namespace API_Bookstore.Repositories.Interfaces
     {
         Task<List<User>> GetAllUsersAsync();
         Task<User?> GetUserByIdAsync(int id);
+        Task<User?> GetUserByNameAsync(string userName);
+        Task<User> CreateUserAsync(User user);
         Task<User?> UpdateUserAsync(User user);
         Task DeleteUserAsync(User user);
 
         // Các phương thức khác
-        Task<bool> ExistsByEmailAsync(string email, int id);
-        Task<bool> ExistsByUsernameAsync(string username, int id);
+        Task<bool> ExistsByEmailAsync(string email, int excludeId = 0);
+        Task<bool> ExistsByUsernameAsync(string username, int excludeId = 0);
     }
 }

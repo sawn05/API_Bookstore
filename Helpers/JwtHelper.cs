@@ -29,7 +29,7 @@ namespace API_Bookstore.Helpers
             };
 
             var secretKeyBytes = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.SecretKey));
-            var expires = DateTime.UtcNow.AddSeconds(30);
+            var expires = DateTime.UtcNow.AddHours(1);
 
             // Ký thông tin xác thực
             var creds = new SigningCredentials(secretKeyBytes, SecurityAlgorithms.HmacSha256);

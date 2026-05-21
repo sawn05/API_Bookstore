@@ -93,6 +93,18 @@ builder.Services.AddSwaggerGen(c =>
 });
 
 
+// Enable CORS
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowFrontend",
+        policy =>
+        {
+            policy
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader();
+        });
+});
 
 var app = builder.Build();
 
@@ -103,6 +115,9 @@ app.UseSwaggerUI();
 // Configure the HTTP request pipeline.
 
 app.UseHttpsRedirection();
+
+// Allow All Frontend to test API 
+app.UseCors("AllowFrontend");
 
 // Enable authentication and authorization middleware
 app.UseAuthentication();

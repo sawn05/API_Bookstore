@@ -26,9 +26,70 @@ namespace API_Bookstore.Services
             _context = context;
         }
 
-        public Task<OrderDTO> CreateOrderAsync(CreateOrderDTO dto)
+        public async Task<OrderDTO> CreateOrderAsync(int currentUserId, CreateOrderDTO dto)
         {
-            throw new NotImplementedException();
+            using var transaction = await _context.Database.BeginTransactionAsync();
+
+            try
+            {
+                // Validate item -> đổ dữ liệu book vào OrderDetail
+                var orderDetails = new List<OrderDetail>();
+                decimal totalAmount = 0;
+
+                foreach (var item in dto.Items)
+                {
+                    var book = await _bookRepository.GetBookByIdAsync(item.BookId);
+
+                    if (book == null)
+                    {
+                        throw new Exception($"Không tìm thấy sản phẩm có id {item.BookId}");
+                    }
+
+                    if (book.Stock < item.Quantity)
+                    {
+                        throw new Exception($"Sản phẩm {book.Title} không có đủ số lượng. Tồn kho: {book.Stock}");
+                    }
+
+                    // Tạo OrderDetail - lưu UnitPrice tại thời điểm đặt
+                    orderDetails.Add(new OrderDetail
+                    {
+                        BookId = book.Id,
+                        Quantity = item.Quantity,
+                        UnitPrice = book.Price
+                    });
+
+                    totalAmount += item.Quantity * book.Price;
+
+                    // Trừ stock
+                    book.Stock -= item.Quantity;    
+                    await _bookRepository.UpdateBookAsync(book);
+                }
+
+                // Tạo Order
+                var order = new Order
+                {
+                    UserId = currentUserId,
+                    TotalAmount = totalAmount,
+                    Status = "Pending",
+                    OrderDate = DateTime.UtcNow,
+                    OrderDetails = orderDetails
+                };
+
+                var created = await _orderRepository.CreateOrderAsync(order);
+
+                // Commit transaction
+                await transaction.CommitAsync();
+
+                // Load lại dữ liệu để map sang DTO
+                var data = await _orderRepository.GetOrderByIdAsync(created.Id);
+
+                return ToDTO(data);
+            }
+            catch // Có lỗi thì rollback toàn bộ dữ liệu
+            {
+                await transaction.RollbackAsync();
+                throw;
+            }
         }
 
 
